@@ -7,11 +7,11 @@ from .views import *
 urlpatterns = [
     #estamos criando a rota/endpoint de acesso à API!
     path("people/", PeopleAPIView.as_view(), name='people'),
-    path("people/<int:id>", PeopleAPIView.as_view(), name='peopleParameter'),
+    path("people/<int:peopleId>", PeopleAPIView.as_view(), name='peopleParameter'),
     path("planets/", PlanetAPIView.as_view(), name='planets'),
-    path("planets/<int:id>", PeopleAPIView.as_view(), name='planetsParameter'),
+    path("planets/<int:planetId>", PlanetAPIView.as_view(), name='planetsParameter'),
     path("starships/", StarshipsAPIView.as_view(), name='starships'),    
-    path("starships/<int:id>", PeopleAPIView.as_view(), name='starshipsParameter'),
+    path("starships/<int:starshipId>", StarshipsAPIView.as_view(), name='starshipsParameter'),
 ]
 
 
