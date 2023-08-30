@@ -44,12 +44,19 @@ class PeopleAPIView(APIView):
 
         if peopleId == '': #se estiver vazio, pega tudo!
 
-            if 'height' in request.GET:
+            peopleFound = ''
+
+            #se receber filtro de ambos:
+            if 'height' in request.GET and 'eyeColor' in request.GET:
+                peopleFound = People.objects.filter(height__gt=request.GET['height']) | People.objects.filter(eyeColor__contains=request.GET['eyeColor'])
+                # peopleFound = People.objects.filter(height__gt=request.GET['height']).filter(eyeColor__contains=request.GET['eyeColor'])
+            elif 'eyeColor' in request.GET:
+                peopleFound = People.objects.filter(eyeColor__contains=request.GET['eyeColor'])
+            elif 'height' in request.GET:
                 peopleFound = People.objects.filter(height__gt=request.GET['height'])
-                peopleSerialized = PeopleSerializer(peopleFound, many=True)
-                return Response(peopleSerialized.data)
-            #primeiro vamos fazer um select all do banco:
-            peopleFound = People.objects.all() #select *from people;
+            else:
+                #primeiro vamos fazer um select all do banco:
+                peopleFound = People.objects.all() #select *from people;
             #agora pegamos os dados em python e mandamos p/ json
             peopleSerialized = PeopleSerializer(peopleFound, many=True)
             #manda a resposta para quem chamou a API:
