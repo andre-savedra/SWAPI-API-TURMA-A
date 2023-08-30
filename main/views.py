@@ -10,6 +10,25 @@ from rest_framework import status
 
 
 class PeopleAPIView(APIView):
+    def delete(self, request, peopleId = ''):
+        # try:
+            #busca o usuario com o id
+            peopleFound = People.objects.get(id=peopleId)
+            peopleFound.delete() #deleta o usuario com o id encontrado
+            return Response(status=status.HTTP_200_OK, data="People successfully deleted!")
+        # except People.DoesNotExist:
+            # return Response(status=status.HTTP_404_NOT_FOUND,data="People not Found!")
+    def put(self, request, peopleId = ''):
+        #o people já existente no banco:
+        peopleFound = People.objects.get(id=peopleId)
+        #o people com os dados novos
+        peopleJson = request.data #coletando o json que veio do cliente
+        #update
+        peopleSerialized = PeopleSerializer(peopleFound, data=peopleJson)
+        peopleSerialized.is_valid(raise_exception=True)
+        peopleSerialized.save()
+        return Response(status=status.HTTP_200_OK, data=peopleSerialized.data)
+
     def post(self, request):
         #recebe o json que veio do cliente
         peopleJson = request.data
@@ -24,6 +43,11 @@ class PeopleAPIView(APIView):
     def get(self, request, peopleId = ''):
 
         if peopleId == '': #se estiver vazio, pega tudo!
+
+            if 'height' in request.GET:
+                peopleFound = People.objects.filter(height__gt=request.GET['height'])
+                peopleSerialized = PeopleSerializer(peopleFound, many=True)
+                return Response(peopleSerialized.data)
             #primeiro vamos fazer um select all do banco:
             peopleFound = People.objects.all() #select *from people;
             #agora pegamos os dados em python e mandamos p/ json
