@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders', #instalando as libs
     'rest_framework', #instalando as libs
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'djoser',
     'main' #instalando o app
 ]
 
@@ -134,5 +137,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {   
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny' #libera s/ autenticação
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication' #trabalhar com token!
+    ],
 }
