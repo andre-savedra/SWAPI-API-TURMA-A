@@ -22,7 +22,7 @@ class Starships(models.Model):
     passengers = models.IntegerField() #int do mysql   
     created = models.DateTimeField(auto_now_add=True) # datetime default now() do mysql
     length = models.DecimalField(max_digits=10, decimal_places=2)
-    
+       
     def __str__(self):
         return self.name
 
