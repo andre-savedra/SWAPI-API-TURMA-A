@@ -85,12 +85,26 @@ WSGI_APPLICATION = 'aula1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+#CONFIGURAÇÕES PARA SE COMUNICAR COM SQLITE!
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME':'testeTurmaA', #nome do BANCO
+        'HOST':'127.0.0.1', #endereço do BANCO
+        'USER':'fms_root', #usuario do banco
+        'PASSWORD':'fmsroot', #senha do banco
+        'PORT':'3306',
+    }   
 }
+
+
+
 
 
 # Password validation
